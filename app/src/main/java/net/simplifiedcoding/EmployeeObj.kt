@@ -11,4 +11,6 @@ class EmployeeObj{
         this.employeeContactNumber = employeeContactNumber
         this.employeeAddress = employeeAddress
     }
+
+    constructor()
 }

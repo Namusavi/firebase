@@ -1,5 +1,10 @@
+
+
 package net.simplifiedcoding.ui.add
 
+
+import android.annotation.SuppressLint
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,31 +24,53 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import net.simplifiedcoding.EmployeeObj
 import net.simplifiedcoding.ui.auth.AuthViewModel
 
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddScreen(context: AuthViewModel, databaseReference: NavHostController) {
+fun AddScreen(viewModel: AuthViewModel?, navController: NavController){
+
+
+    var firebaseDatabase = FirebaseDatabase.getInstance().getReference("Data")
+        .child("Name");
+
+    // on below line we are calling method to display UI
+    firebaseUI(LocalContext.current, firebaseDatabase )
+
+
+
+}
+
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun firebaseUI(context: Context, databaseReference: DatabaseReference) {
 
     val name = remember {
         mutableStateOf(TextFieldValue())
     }
 
-    val address = remember {
+    val contactNumber = remember {
         mutableStateOf(TextFieldValue())
     }
 
-    val contactNumber = remember {
+    val address = remember {
         mutableStateOf(TextFieldValue())
     }
 
@@ -174,9 +201,13 @@ fun AddScreen(context: AuthViewModel, databaseReference: NavHostController) {
         // on below line creating button
         Button(
             onClick = {
+
+
+                //Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
                 // on below line we are adding data.
 
-                      val empObj = EmployeeObj(name.value.text, address.value.text, contactNumber.value.text)
+                var empObj = EmployeeObj(name.value.text,contactNumber.value.text,address.value.text)
+
                 databaseReference.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         // inside the method of on Data change we are setting
@@ -205,9 +236,6 @@ fun AddScreen(context: AuthViewModel, databaseReference: NavHostController) {
                 })
 
 
-
-
-
             },
             // on below line we are
             // adding modifier to our button.
@@ -220,6 +248,4 @@ fun AddScreen(context: AuthViewModel, databaseReference: NavHostController) {
         }
     }
 }
-
-
 
