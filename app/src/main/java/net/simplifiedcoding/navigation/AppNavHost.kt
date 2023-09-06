@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import net.simplifiedcoding.ui.add.AddScreen
 import net.simplifiedcoding.ui.Contacts.ContactsScreen
 import net.simplifiedcoding.ui.auth.AuthViewModel
 import net.simplifiedcoding.ui.auth.LoginScreen
@@ -44,6 +45,10 @@ fun AppNavHost(
         composable(ROUTE_CONTACTS) {
             ContactsScreen(viewModel, navController)
         }
+        composable(ROUTE_AddData) {
+            AddScreen(viewModel, navController)
+        }
 
     }
 }
+

@@ -1,6 +1,5 @@
 package net.simplifiedcoding.ui.Contacts
 
-import android.provider.ContactsContract.Contacts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
